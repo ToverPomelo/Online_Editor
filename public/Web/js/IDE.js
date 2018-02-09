@@ -12,6 +12,14 @@
         }else{
             $("#toolBox").css("left",parseInt($("#ProManager").css("width"))+1+'px');
         }
+//窗口
+        if($("#w").css("width") > $("#EditorCon").css("width")){
+            $("#w").window("resize",{width:$("#EditorCon").css("width")});  //好像有点问题
+        }
+        if($("#w").css("height") > $("#EditorCon").css("height")){
+            $("#w").window("resize",{height:$("#EditorCon").css("height")});
+        }
+
     };
     function PMrControling(whichBox){
         switch(whichBox){
