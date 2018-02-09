@@ -2,16 +2,16 @@
         document.getElementById("IDE").style.height= ""+document.documentElement.clientHeight-1+"px";
 //状态栏
         $("#PMrContainer").css("width",$("#ProManager").css("width"));
-//代码框区域
+    //代码框区域
         document.getElementById("EditorCon").style.left=""+document.getElementById("ProManager").offsetWidth-1+"px";
         document.getElementById("EditorCon").style.bottom=""+document.getElementById("toolBox").offsetHeight-1+"px";
 //工具栏
 	//$("#toolBox").children("div").css("width",$("#EditorCon").css("width"));
-	if($("#toolBox").css("display") == "none"){
-		$("#toolBox").css("left",''+2+'px');
-	}else{
-		$("#toolBox").css("left",parseInt($("#ProManager").css("width"))+1+'px');
-	}	
+        if($("#ProManager").css("display") == "none"){
+            $("#toolBox").css("left",''+2+'px');
+        }else{
+            $("#toolBox").css("left",parseInt($("#ProManager").css("width"))+1+'px');
+        }
     };
     function PMrControling(whichBox){
         switch(whichBox){
@@ -354,20 +354,21 @@ function changeAll(){
   editor.replaceAll(w2);
 }
 
-function toLine(){
-  var line = document.getElementById("ToLine").value;
+function toLine(value){
+  //var line = document.getElementById("ToLine").value;
+  var line = value;
   if(isNaN(line)){
-    console.log('It\'s not a number!');
+    console.log('请输入数字!');
     return false;
   }
   else{
     var lineNum = Number(line);
     if(lineNum<0){
-      console.log('It\'s smaller than zero!')
+      console.log('没有小于0的行啦!')
       return false;
     }
     else if(lineNum>editor.session.getLength()){
-      console.log('It\'s too big!');
+      console.log('行数太大，没有这行！');
       return false;
     }
     else{
@@ -433,4 +434,3 @@ function handFile(file){
 
 //add new:
 /*** jquery模块 ***/
-

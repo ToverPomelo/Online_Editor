@@ -7,7 +7,7 @@
 <script type="text/javascript" src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js" charset="utf-8"></script>
 <script src="./../javascripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="./../javascripts/ace/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
-<script src="./../javascripts/main.js" type="text/javascript" charset="utf-8"></script>
+
 
   <!-- 引入JQuery -->
   <script type="text/javascript" src="./../javascripts/easyui/jquery.min.js"></script>
@@ -40,22 +40,22 @@
 		</div>
 		<div id="mm2" style="width:100px;">
 			<div>代码缩进</div>
-			<div id="menuFindWord">搜索与替换</div>
+			<div id="menuFindWord" data-options="iconCls:'icon-ok'">搜索与替换</div>
 			<div>跳转</div>
             <div class="menu-sep"></div>
-            <div id="menuSetEditor">编辑器设置</div>
+            <div id="menuSetEditor" data-options="iconCls:'icon-ok'">编辑器设置</div>
 		</div>
 		<div id="mm3" style="width:100px;">
 			<div>项目管理</div>
-			<div data-options="iconCls:'icon-ok'">状态栏</div>
+			<div id="menuProManager" data-options="iconCls:'icon-ok'">状态栏</div>
 			<div id="menuToolBox" data-options="iconCls:'icon-ok'">工具栏</div>
 			<div>自动隐藏</div>
 			<div>多窗口模式</div>
 		</div>
 		<div id="mm4" style="width:100px;">
-			<div>gcc</div>
-			<div>clang</div>
-			<div>cl</div>
+			<div id="compilerGcc" data-options="iconCls:'icon-ok'">gcc</div>
+			<div id="compilerClang">clang</div>
+			<div id="compilerCl">cl</div>
 		</div>
 		<div id="mm5" style="width:100px;">
 			<div>编译</div>
@@ -174,9 +174,9 @@
         <div>到第：<span><input id="toLine" class="easyui-textbox" style="width:60px;height:26px" data-options="
             onChange: function(value){toLine(value)}"></span>&ensp;行</div>
         <div style="margin:5px"></div>
-        <div><span><div id="clearText" style="position:absolute;left:0px;top:94px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" href="javascript:void(0)" style="width:120px;">清除全部</a></div></span></div>
+        <div><span><div id="clearText" style="position:absolute;left:0px;top:94px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" href="javascript:void(0)" style="width:120px;">清空文字</a></div></span></div>
 
-        <div id="closeToolBoxSetEditor" style="position:absolute;right:245px;bottom:1px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" href="javascript:void(0)" style="width:80px;">确定</a></div>
+        <div id="closeToolBoxSetEditor" style="position:absolute;right:245px;bottom:1px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" href="javascript:void(0)" style="width:80px;">隐藏</a></div>
     </div>
 
     <div id="toolBoxFindWord" title="搜索与替换" style="padding:10px" data-options="hide:true">
@@ -197,7 +197,7 @@
             <span><div id="findAllWords" style="position:absolute;left:220px;top:94px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-search'" href="javascript:void(0)" style="width:120px;">搜索全部</a></div></span>
             <span><div id="changeAll" style="position:absolute;left:345px;top:94px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" href="javascript:void(0)" style="width:120px;">全部替换</a></div></span>
         </div>
-        <div id="closeToolBoxFindWord" style="position:absolute;right:245px;bottom:1px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" href="javascript:void(0)" style="width:80px;">确定</a></div>
+        <div id="closeToolBoxFindWord" style="position:absolute;right:245px;bottom:1px;margin:10px"><a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" href="javascript:void(0)" style="width:80px;">隐藏</a></div>
     </div>
 </div>
 
@@ -309,8 +309,8 @@ $(document).ready(function() {
     });
 //工具栏相关隐藏
     $("#toolBox").tabs('getTab','Empty').panel('options').tab.hide();
-    $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.hide();
-    $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.hide();
+    //$("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.hide();
+    //$("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.hide();
 
 //菜单中工具栏点击事件：
     var haveIconToolBox = true;
@@ -338,10 +338,10 @@ $(document).ready(function() {
     );
 
 //菜单中编辑器设置点击事件：
-    var isHideSetEditor = true;
+    var isHideSetEditor = false;
     $("#menuSetEditor").click(
         function(){
-            if(!isHideSetEditor){
+/*            if(!isHideSetEditor){
                 $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.hide();
                 $("#toolBox").tabs('getTab','Empty').panel('options').tab.click();
                 isHideSetEditor = !isHideSetEditor;
@@ -351,6 +351,19 @@ $(document).ready(function() {
                 isHideSetEditor = !isHideSetEditor;
             }
         }
+*/
+        if(!isHideSetEditor){
+            $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.click();
+        }else{
+            $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.show();
+            $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.click();
+            $("#menuSetEditor").menu('setIcon', {
+                   target: $("#menuSetEditor")[0],
+                   iconCls: 'icon-ok'
+            });
+            isHideSetEditor = !isHideSetEditor;
+        }
+    }
     );
 //编辑器设置中的关闭按钮
     $("#closeToolBoxSetEditor").click(
@@ -358,10 +371,10 @@ $(document).ready(function() {
             if(!isHideSetEditor){
                 $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.hide();
                 $("#toolBox").tabs('getTab','Empty').panel('options').tab.click();
-                isHideSetEditor = !isHideSetEditor;
-            }else{
-                $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.show();
-                $("#toolBox").tabs('getTab','编辑器设置').panel('options').tab.click();
+                $("#menuSetEditor").menu('setIcon', {
+                       target: $("#menuSetEditor")[0],
+                       iconCls: ''
+                });
                 isHideSetEditor = !isHideSetEditor;
             }
         }
@@ -375,16 +388,28 @@ $(document).ready(function() {
     $("#clearText").click(clearText);
 
 //菜单中搜索与替换点击事件：
-    var isHideFindWord = true;
+    var isHideFindWord = false;
     $("#menuFindWord").click(
         function(){
-            if(!isHideFindWord){
+/*            if(!isHideFindWord){
                 $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.hide();
                 $("#toolBox").tabs('getTab','Empty').panel('options').tab.click();
                 isHideFindWord = !isHideFindWord;
             }else{
                 $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.show();
                 $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.click();
+                isHideFindWord = !isHideFindWord;
+            }
+*/
+            if(!isHideFindWord){
+                $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.click();
+            }else{
+                $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.show();
+                $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.click();
+                $("#menuFindWord").menu('setIcon', {
+                       target: $("#menuFindWord")[0],
+                       iconCls: 'icon-ok'
+                });
                 isHideFindWord = !isHideFindWord;
             }
         }
@@ -395,10 +420,10 @@ $(document).ready(function() {
             if(!isHideFindWord){
                 $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.hide();
                 $("#toolBox").tabs('getTab','Empty').panel('options').tab.click();
-                isHideFindWord = !isHideFindWord;
-            }else{
-                $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.show();
-                $("#toolBox").tabs('getTab','搜索与替换').panel('options').tab.click();
+                $("#menuFindWord").menu('setIcon', {
+                       target: $("#menuFindWord")[0],
+                       iconCls: ''
+                });
                 isHideFindWord = !isHideFindWord;
             }
         }
@@ -409,6 +434,82 @@ $(document).ready(function() {
     $("#changeWord").click(changeWord);
     $("#changeAll").click(changeAll);
     $("#findAllWords").click(findAllWords);
+
+//菜单中编译器选择
+    var haveIconCompiler = "compilerGcc";
+    $("#compilerGcc").click(
+        function(){
+            if(haveIconCompiler != "compilerGcc"){
+                $("#compilerGcc").menu('setIcon', {
+                       target: $("#compilerGcc")[0],
+                       iconCls: 'icon-ok'
+                });
+                $("#"+haveIconCompiler).menu('setIcon', {
+                       target: $("#"+haveIconCompiler)[0],
+                       iconCls: ''
+                });
+                haveIconCompiler = "compilerGcc";
+                console.log("Compiler changed to gcc");
+            }
+        }
+    );
+    $("#compilerClang").click(
+        function(){
+            if(haveIconCompiler != "compilerClang"){
+                $("#compilerClang").menu('setIcon', {
+                       target: $("#compilerClang")[0],
+                       iconCls: 'icon-ok'
+                });
+                $("#"+haveIconCompiler).menu('setIcon', {
+                       target: $("#"+haveIconCompiler)[0],
+                       iconCls: ''
+                });
+                haveIconCompiler = "compilerClang";
+                console.log("Compiler changed to clang");
+            }
+        }
+    );
+    $("#compilerCl").click(
+        function(){
+            if(haveIconCompiler != "compilerCl"){
+                $("#compilerCl").menu('setIcon', {
+                       target: $("#compilerCl")[0],
+                       iconCls: 'icon-ok'
+                });
+                $("#"+haveIconCompiler).menu('setIcon', {
+                       target: $("#"+haveIconCompiler)[0],
+                       iconCls: ''
+                });
+                haveIconCompiler = "compilerCl";
+                console.log("Compiler changed to cl");
+            }
+        }
+    );
+
+//菜单中状态栏点击
+    var haveIconProManager = true;
+    $("#menuProManager").click(
+        function(){
+            if(!haveIconProManager){
+                $("#menuProManager").menu('setIcon', {
+                       target: $("#menuProManager")[0],
+                       iconCls: 'icon-ok'
+                });
+                $("#ProManager").css("display","block");
+                KeepShape();
+                haveIconProManager = !haveIconProManager;
+            }else{
+                $("#menuProManager").menu('setIcon', {
+                       target: $("#menuProManager")[0],
+                       iconCls: ''
+                });
+                $("#ProManager").css("display","none");
+                KeepShape();
+                haveIconProManager = !haveIconProManager;
+            }
+
+        }
+    );
 
 </script>
 
