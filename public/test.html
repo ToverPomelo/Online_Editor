@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test Page</title>
+<script type="text/javascript" src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js" charset="utf-8"></script>
+<script src="./javascripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./javascripts/ace/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script src="./javascripts/main.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- 引入JQuery -->
+  <script type="text/javascript" src="./javascripts/easyui/jquery.min.js"></script>
+  <!-- 引入EasyUI -->
+  <script type="text/javascript" src="./javascripts/easyui/jquery.easyui.min.js"></script>
+  <!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+  <script type="text/javascript" src="./javascripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+  <!-- 引入EasyUI的样式文件-->
+  <link rel="stylesheet" href="./javascripts/easyui/themes/dark-hive/easyui.css" type="text/css"/>
+  <!-- 引入EasyUI的图标样式文件-->
+  <link rel="stylesheet" href="./javascripts/easyui/themes/icon.css" type="text/css"/>
+</head>
+<body>
+
+	<h2>Window Layout</h2>
+	<p>Using layout on window.</p>
+	<div style="margin:20px 0;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#w').window('open')">Open</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#w').window('close')">Close</a>
+	</div>
+	<div id="w" class="easyui-window" title="Window Layout" data-options="iconCls:'icon-save'" style="width:500px;height:200px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<div data-options="region:'east',split:true" style="width:100px"></div>
+			<div data-options="region:'center'" style="padding:10px;" id="editor">function foo(items) {
+    var x = "All this is syntax highlighted";
+    return x;
+}
+
+			</div>
+			<div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:alert('ok')" style="width:80px">Ok</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:alert('cancel')" style="width:80px">Cancel</a>
+			</div>
+		</div>
+	</div>
+ 
+
+
+<script>
+  var language = "c_cpp";
+  var theme = "terminal";
+  var Range = require('ace/range').Range;      /*startRow,starrColumn,endRow,endColumn*/
+
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/"+theme);
+  editor.getSession().setMode("ace/mode/"+language);
+  document.getElementById('editor').style.fontSize='26px';   //set font size
+  editor.getSession().setTabSize(2);            //set tab size
+  editor.container.style.lineHeight = 1;        //set line height
+  editor.renderer.updateFontSize();
+  //ace.require("ace/ext/language_tools");
+  editor.setOptions({
+    enableBasicAutocompletion:true,
+    enableSnippets:true,
+    enableLiveAutocompletion:true
+});
+
+(function(){
+var input = document.querySelector('#input');
+input.addEventListener('change', function(e){getType(e)});
+
+})();
+
+
+</script>
+</body>
+</html>

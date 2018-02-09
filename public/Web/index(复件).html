@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="css/IDE.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/IDE.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <div id="IDE">
+        <div id="Menu">
+            <div id="LOGO"><a href="#">SCNU</a></div>
+            <div class="menu_item" style="margin-left:24px;">
+                <a href="#">文件◿</a>
+                <ul>
+                    <li><a href="#">导入文件</a></li>
+                    <li><a href="#">导出文件</a></li>
+                    <li><a href="#">清空文件</a></li>
+                    <li><a href="#">分享文件</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">编辑◿</a>
+                <ul>
+                    <li><a href="#">代码缩进</a></li>
+                    <li id="sar"><a href="#">搜索与替换</a></li>
+                    <li><a href="#">跳转</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">视图◿</a>
+                <ul>
+                    <li><a href="#">项目管理</a></li>
+                    <li><a href="#">状态栏</a></li>
+                    <li><a href="#">自动隐藏</a></li>
+                    <li><a href="#">多窗口模式</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">编译器◿</a>
+                <ul>
+                    <li><a href="#">gcc 4.81</a></li>
+                    <li><a href="#">gcc 7.10</a></li>
+                    <li><a href="#">clang 5.0</a></li>
+                    <li><a href="#">clang 5.1</a></li>
+                    <li><a href="#">cl 14.0</a></li>
+                    <li><a href="#">cl 14.2</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">运行◿</a>
+                <ul>
+                    <li><a href="#">编译</a></li>
+                    <li><a href="#">运行</a></li>
+                    <li><a href="#">编译运行</a></li>
+                    <li><a href="#">调试</a></li>
+                </ul>
+            </div>
+        </div>
+    <div>
+        <div id="OutputArea">
+                <div id="StatusBar">
+                    代码编辑中。。。
+                </div>
+                complied successful ! ! !
+        </div>
+        <div id="ProManager">
+                <div id="PMrControler">
+                    <hr/>
+                    <center>
+                        <a href="#" id="PMrfileTreeLb" onClick="PMrControling(1)">文件管理</a>
+                        |
+                        <a href="#" id="PMrESLb" onClick="PMrControling(2)">项目元素</a>
+                        |
+                        <a href="#" id="PMrgdbSELb" onClick="PMrControling(3)">调试查看</a>
+                    </center>
+                    <hr/>
+                </div>
+                <div id="PMrContainer">
+                    <div class="PMrfileTree">
+                        <ul class="tree treemenu">
+                            <li class="tree-empty"><span class="toggler"></span><a href="#">Home</a></li>
+                            <li class="tree-opened"><span class="toggler">Category</span>
+                                <ul class="treemenu" style="display: block;">
+                                    <li class="tree-closed"><span class="toggler"></span><a href="#">jQuery</a>
+                                        <ul class="treemenu" style="display: none;">
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery UI</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery Mobile</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="tree-opened"><span class="toggler"></span><a href="#">JavaScript</a>
+                                        <ul class="treemenu" style="display: block;">
+                                            <li class="tree-empty tree-opened"><span class="toggler"></span><a class="active" href="#">AngularJS</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">React</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">Backbone</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#suits">Golang</a></li>
+                                </ul>
+                            </li>
+                            <li class="tree-closed"><span class="toggler"></span><a href="#about">About</a>
+                                <ul class="treemenu" style="display: none;">
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#">Contact</a></li>
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#">Blog</a></li>
+                                    <li class="tree-closed"><span class="toggler"></span><a href="#">Jobs</a>
+                                        <ul class="treemenu" style="display: none;">
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs1">Job 1</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs2">Job 2</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs3">Job 3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="PMrES">class:people</div>
+                    <div class="PMrgdbSE">int x=3;</div>
+                </div>
+        </div>
+
+
+<div id="EditorCon">
+  <pre id="MainEditor"style="margin:0 0 0 -8px;min-height:100%">
+<textarea class="ace_text-input">
+#include <iostream>
+int main(){
+
+
+    return 0;
+}</textarea>
+  </pre>
+<script>
+    var language = "c_cpp";
+    var theme = "terminal";
+    var Range = require('ace/range').Range;      /*startRow,starrColumn,endRow,endColumn*/
+
+    var editor = ace.edit("MainEditor");
+
+    editor.setTheme("ace/theme/"+theme);
+    editor.getSession().setMode("ace/mode/"+language);
+    document.getElementById('MainEditor').style.fontSize='26px';   //set font size
+    editor.getSession().setTabSize(2);            //set tab size
+    editor.container.style.lineHeight = 1;        //set line height
+    editor.renderer.updateFontSize();
+    //ace.require("ace/ext/language_tools");
+    editor.setOptions({
+      enableBasicAutocompletion:true,
+      enableSnippets:true,
+      enableLiveAutocompletion:true
+  });
+
+  (function(){
+  var input = document.querySelector('#input');
+  if(input)
+  input.addEventListener('change', function(e){getType(e)});
+
+  })();
+
+//new:
+  var sar = document.getElementById("sar");
+  sar.addEventListener("click",function(){
+    if(!document.getElementById("sarWin")){
+      var newWindow = document.createElement("div");
+      document.getElementById("EditorCon").appendChild(newWindow);
+      newWindow.style.position = "absolute";
+      newWindow.style.width = "100%";
+      newWindow.style.height = "20%";
+      newWindow.style.zIndex = 200001;
+      newWindow.style.bottom = 0;
+      newWindow.style.backgroundColor = "#4088AA88";
+      newWindow.id = "sarWin";
+      var sarWin = document.getElementById("sarWin");
+      var div1 = document.createElement("div");
+      var wordIP1 = document.createElement("input");
+      sarWin.appendChild(div1);
+      div1.appendChild(wordIP1);
+      wordIP1.id = "Word_1";
+    }
+    else{
+      var sarWin = document.getElementById("sarWin");
+      sarRemove.parentNode.removeChild(sarWin);
+    }
+  })
+//end new
+</script>
+  <div class="resizeMe editor"></div>
+</div>
+
+
+    </div>
+    </div>
+</body>

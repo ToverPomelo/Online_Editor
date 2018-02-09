@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ACE in Action</title>
+<script type="text/javascript" src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js" charset="utf-8"></script>
+<script src="./javascripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./javascripts/ace/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script src="./javascripts/main.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- 引入JQuery -->
+  <script type="text/javascript" src="./javascripts/easyui/jquery.min.js"></script>
+  <!-- 引入EasyUI -->
+  <script type="text/javascript" src="./javascripts/easyui/jquery.easyui.min.js"></script>
+  <!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+  <script type="text/javascript" src="./javascripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+  <!-- 引入EasyUI的样式文件-->
+  <link rel="stylesheet" href="./javascripts/easyui/themes/default/easyui.css" type="text/css"/>
+  <!-- 引入EasyUI的图标样式文件-->
+  <link rel="stylesheet" href="./javascripts/easyui/themes/icon.css" type="text/css"/>
+<script>
+
+
+</script>
+
+<style type="text/css" media="screen">
+    #editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 400px;
+        width: 50%;
+    }
+</style>
+</head>
+<body>
+
+<div id="editor">function foo(items) {
+    var x = "All this is syntax highlighted";
+    return x;
+}
+hahahahhahahahahahahahahha
+hahahahahahahahahhahahahahhaah
+</div>
+
+<!--The buttons offered to test-->
+<div style="margin:2px">Set language:<input type="text" value="Test" name="InputLanguage" id="InputLanguage"/><button onclick="setLanguage();">Done</button></div>
+<div style="margin:2px"><button onclick="showPosition();">ShowPosition</button></div>
+<div style="margin:2px"><button onclick="setPosition();">PositionCheck</button></div>
+<div style="margin:2px">W1:<input type="text" name="Word_1" id="Word_1"/></div>
+<div style="margin:2px">W2:<input type="text" name="Word_2" id="Word_2"/></div>
+<div style="margin:2px">R2:<input type="text" style="width:50px" name="Range_1" id="Range_1"/>
+    R2:<input type="text" style="width:50px" name="Range_2" id="Range_2"/></div>
+<div style="margin:2px"><button onclick="findWordNext();">FindW1Next</button></div>
+<div style="margin:2px"><button onclick="findWordLast();">FindW1Last</button></div>
+<div style="margin:2px"><button onclick="changeWord();">ChangeWord</button></div>
+<div style="margin:2px"><button onclick="findAllWords();">FindAll</button></div>
+<div style="margin:2px"><button onclick="changeAll();">ChangeAll</button></div>
+<div style="margin:2px" onkeypress="autoLine();">ToLine:<input type="text" name="ToLine" id="ToLine"/></div>
+<div style="margin:2px"><button onclick="toLine();" id="toLine">GoToLine</button></div>
+<div style="margin:2px"><button onclick="clearText();">Clear</button></div>
+
+<div style="height:20px"></div>
+
+<div style="margin:2px"><input type="file" id="input"/></div>
+<div style="margin:2px"><input type="button" id="export" value="导出" onclick="save();"/></div>
+
+
+<script>
+  var language = "c_cpp";
+  var theme = "terminal";
+  var Range = require('ace/range').Range;      /*startRow,starrColumn,endRow,endColumn*/
+
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/"+theme);
+  editor.getSession().setMode("ace/mode/"+language);
+  document.getElementById('editor').style.fontSize='26px';   //set font size
+  editor.getSession().setTabSize(2);            //set tab size
+  editor.container.style.lineHeight = 1;        //set line height
+  editor.renderer.updateFontSize();
+  //ace.require("ace/ext/language_tools");
+  editor.setOptions({
+    enableBasicAutocompletion:true,
+    enableSnippets:true,
+    enableLiveAutocompletion:true
+});
+
+(function(){
+var input = document.querySelector('#input');
+input.addEventListener('change', function(e){getType(e)});
+
+})();
+
+
+</script>
+</body>
+</html>

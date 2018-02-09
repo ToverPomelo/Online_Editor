@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ACE in Action</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script>
+
+
+</script>
+
+<style type="text/css" media="screen">
+    #editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 250px;
+        width: 50%;
+    }
+</style>
+</head>
+<body>
+
+<div id="editor">function foo(items) {
+    var x = "All this is syntax highlighted";
+    return x;
+}
+hahahahhahahahahahahahahha
+hahahahahahahahahhahahahahhaah
+</div>
+
+<!--The buttons offered to test-->
+<div style="margin:2px"><button onclick="showPosition();">ShowPosition</button></div>
+<div style="margin:2px"><button onclick="setPosition();">PositionCheck</button></div>
+<div style="margin:2px">W1:<input type="text" name="Word_1" id="Word_1"/></div>
+<div style="margin:2px">W2:<input type="text" name="Word_2" id="Word_2"/></div>
+<div style="margin:2px">R2:<input type="text" style="width:50px" name="Range_1" id="Range_1"/>
+    R2:<input type="text" style="width:50px" name="Range_2" id="Range_2"/></div>
+<div style="margin:2px"><button onclick="findWordNext();">FindW1Next</button></div>
+<div style="margin:2px"><button onclick="findWordLast();">FindW1Last</button></div>
+<div style="margin:2px"><button onclick="changeWord();">ChangeWord</button></div>
+<div style="margin:2px"><button onclick="findAllWords();">FindAll</button></div>
+<div style="margin:2px"><button onclick="changeAll();">ChangeAll</button></div>
+<div style="margin:2px" onkeypress="autoLine();">ToLine:<input type="text" name="ToLine" id="ToLine"/></div>
+<div style="margin:2px"><button onclick="toLine();" id="toLine">GoToLine</button></div>
+<div style="margin:2px"><button onclick="clearText();">Clear</button></div>
+
+<div style="height:20px" />
+
+<input type="file" id="input">
+
+
+<script>
+    var language = "javascript";
+    var theme = "terminal";
+    var Range = require('ace/range').Range;      /*startRow,starrColumn,endRow,endColumn*/
+
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/"+theme);
+    editor.getSession().setMode("ace/mode/"+language);
+    document.getElementById('editor').style.fontSize='12px';   //set font size
+    editor.getSession().setTabSize(2);            //set tab size
+    editor.container.style.lineHeight = 1;        //set line height
+    editor.renderer.updateFontSize();
+    //ace.require("ace/ext/language_tools");
+    editor.setOptions({
+      enableBasicAutocompletion:true,
+      enableSnippets:true,
+      enableLiveAutocompletion:true
+    });
+
+    //editor.gotoLine(editor.session.getLength()+1);    test
+    //editor.insert("\nHello World!");
+
+
+    function showPosition(){
+      var cursor = editor.selection.getCursor();
+      alert(cursor.row+","+cursor.column);
+    }
+
+    function setPosition(a,b){
+      editor.selection.moveTo(a,b);
+    }
+
+    function findWordNext(){
+      var w1 = document.getElementById("Word_1").value;
+      var r1 = document.getElementById("Range_1").value;
+      var r2 = document.getElementById("Range_2").value;
+
+      if(r1=="" || !r1){               //if r1 is empty,r1 = start
+        r1 = 1;
+      }
+      if(r2=="" || !r2){               //if r2 is empty,r2 = end
+        r2 = editor.session.getLength();
+      }
+      var rowRange = new Range(Number(r1)-1,0,Number(r2)-1,editor.selection.getLineRange(Number(r2)-1).end);
+      editor.find(w1,{backwards:false,range:rowRange});
+    }
+
+    function findWordLast(){
+      var w1 = document.getElementById("Word_1").value;
+      var r1 = document.getElementById("Range_1").value;
+      var r2 = document.getElementById("Range_2").value;
+
+      if(r1=="" || !r1){
+        r1 = 1;
+      }
+      if(r2=="" || !r2){
+        r2 = editor.session.getLength();
+      }
+      var rowRange = new Range(Number(r1)-1,0,Number(r2)-1,editor.selection.getLineRange(Number(r2)-1).end);
+      editor.find(w1,{backwards:true,range:rowRange});
+    }
+
+    function changeWord(){
+  /*    var w1 = document.getElementById("Word_1").value;
+      var w2 = document.getElementById("Word_2").value;
+      editor.find(w1);
+      editor.replace(w2);   */
+      var w2 = document.getElementById("Word_2").value;
+      editor.session.replace(editor.selection.getRange(),w2);
+    }
+
+    function findAllWords(){
+      var w1 = document.getElementById("Word_1").value;
+      var r1 = document.getElementById("Range_1").value;
+      var r2 = document.getElementById("Range_2").value;
+
+      if(r1=="" || !r1){
+        r1 = 1;
+      }
+      if(r2=="" || !r2){
+        r2 = editor.session.getLength();
+      }
+      //console.log(r1+","+r2);
+      var rowRange = new Range(Number(r1)-1,0,Number(r2)-1,editor.selection.getLineRange(Number(r2)-1).end);           /*startRow,starrColumn,endRow,endColumn*/
+      editor.findAll(w1,{range:rowRange});
+    }
+
+    function changeAll(){
+      var w1 = document.getElementById("Word_1").value;
+      var w2 = document.getElementById("Word_2").value;
+      var r1 = document.getElementById("Range_1").value;
+      var r2 = document.getElementById("Range_2").value;
+
+      if(r1=="" || !r1){
+        r1 = 1;
+      }
+      if(r2=="" || !r2){
+        r2 = editor.session.getLength();
+      }
+      var rowRange = new Range(Number(r1)-1,0,Number(r2)-1,editor.selection.getLineRange(Number(r2)-1).end);
+      editor.findAll(w1,{range:rowRange});
+      //editor.find(w1);
+      editor.replaceAll(w2);
+    }
+
+    function toLine(){
+      var line = document.getElementById("ToLine").value;
+      if(isNaN(line)){
+        console.log('It\'s not a number!');
+        return false;
+      }
+      else{
+        var lineNum = Number(line);
+        if(lineNum<0){
+          console.log('It\'s smaller than zero!')
+          return false;
+        }
+        else if(lineNum>editor.session.getLength()){
+          console.log('It\'s too big!');
+          return false;
+        }
+        else{
+          editor.gotoLine(lineNum);
+        }
+      }
+    }
+
+    function autoLine(){
+      if(event.keyCode == 13){                           //press enter then go to line
+        var button = document.getElementById("toLine");
+        button.click();
+      }
+    }
+
+    function clearText(){
+      editor.setValue("");
+    }
+//*http://jsbin.com/koxuhuduro/edit?html,js,console,output******************/
+  (function(){
+    var input = document.querySelector('#input');
+    input.addEventListener('change', function(e){
+      var fileName = e.target.value;
+      if(fileName.length > 1 && fileName ) {
+      var ldot = fileName.lastIndexOf(".");
+      var type = fileName.substring(ldot + 1);
+      //console.log(fileName+" "+type);
+      switch (type) {
+        default:language = "javascript";
+      }
+      console.log(language);
+      }
+      handFile(e.target.files[0]);
+    });
+
+    function handFile(file){
+      console.log('hand');
+      var reader = new FileReader();
+      reader.onload = function(e){
+        editor.setValue(this.result);
+      };
+      reader.readAsText(file);
+      editor.selection.moveTo(0,0);
+    }
+  })();
+
+/**************/
+
+
+</script>
+</body>
+</html>

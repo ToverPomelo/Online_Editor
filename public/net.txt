@@ -1,0 +1,2 @@
+https://github.com/eligrey/FileSaver.js/
+http://blog.csdn.net/zdavb/article/details/50266215
