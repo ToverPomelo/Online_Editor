@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>This is a window test page!</title>
+
+	<!-- 引入JQuery -->
+	<script type="text/javascript" src="./javascripts/easyui/jquery.min.js"></script>
+	<!-- 引入EasyUI -->
+	<script type="text/javascript" src="./javascripts/easyui/jquery.easyui.min.js"></script>
+	<!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+	<script type="text/javascript" src="./javascripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<!-- 引入EasyUI的样式文件-->
+	<link rel="stylesheet" href="./javascripts/easyui/themes/dark-hive/easyui.css" type="text/css"/>
+	<!-- 引入EasyUI的图标样式文件-->
+	<link rel="stylesheet" href="./javascripts/easyui/themes/icon.css" type="text/css"/>
+</head>
+<body>
+	<div style="margin:20px 0;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#w').window('open')">Open</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#w').window('close')">Close</a>
+	</div>
+	<div id="area" style="position:absolute;width:600px;height:600px;left:200px;top:100px;border-style:solid;background-color:gray">
+		<div id="w" class="easyui-window" title="Basic Window" data-options="iconCls:'icon-save',inline:true" style="width:500px;height:200px;padding:10px;">
+			The window content.
+		</div>
+	</div>
+<script>
+$(document).ready(function() {
+    var moving = false;
+    $("#w").window({
+        onMove:function(left,top){
+	    moving = true;
+            //console.log(this.left+" - "+top);
+	    var w=$("#area").width();
+            var h=$("#area").height();
+            var width=$("#w").window("options").width;
+            var height=$("#w").window("options").height;
+
+            if(top<0){
+                $("#w").window("resize",{top:0});
+            }
+            if((height+top)>h){
+                $("#w").window("resize",{top:h-height});
+            }
+            if(left<0){
+                $("#w").window("resize",{left:0});
+            }
+            if((width+left)>w){
+                $("#w").window("resize",{left:w-width});
+            }
+
+
+	    moving = false;
+        },
+        onResize:function(width, height){
+	    if(moving){return;}	  //onResize与onMove会互作
+
+	    var w=$("#area").width();
+            var h=$("#area").height();
+            var left=$("#w").window("options").left;
+            var top=$("#w").window("options").top;
+
+            if(top<0){
+                $("#w").window("resize",{height:height+top,top:0});
+            }
+            if((height+top)>h){
+                $("#w").window("resize",{height:h-top});
+            }
+            if(left<0){
+                $("#w").window("resize",{width:width+left,left:0});
+            }
+            if((width+left)>w){
+                $("#w").window("resize",{width:w-left});
+            }
+
+        }
+    });
+
+});
+</script>
+</body>
+</html>
