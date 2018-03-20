@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>多级目录树</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<!--
+	<link rel="stylesheet" type="text/css" href="css/default.css">
+	-->
+	<link rel="stylesheet" type="text/css" href="css/IDE.css">
+
+	<link rel="stylesheet" type="text/css" href="css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="css/Example.css">
+	<script src="lib/Aimara.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		window.onload = function() {
+
+			//Initializing Tree
+
+			//Tree Context Menu Structure
+			var contex_menu = {
+				'context1' : {
+					elements : [
+						{
+							text : '打开文件',
+							icon: 'images/leaf.png',
+							action : function(node) {
+
+							},
+							type: 'file'
+						},
+						{
+							text : '导出文件',
+							icon: 'images/redo.png',
+							action : function(node) {
+
+							},
+							type: 'file'
+						},
+						{
+							text : '新建文件夹',
+							icon: 'images/add1.png',
+							action : function(node) {
+								node.createChildNode('Created',true,'images/folder.png',null,'context1','fold');
+							},
+							type: 'fold'
+						},
+						{
+							text : '新建文件',
+							icon: 'images/add1.png',
+							action : function(node) {
+								node.createChildNode('Created',true,'images/file.png',null,'context1','file');
+							},
+							type: 'fold'
+						},
+						{
+							text : '删除文件夹',
+							icon: 'images/delete.png',
+							action : function(node) {
+								node.removeNode();
+							},
+							type: 'fold'
+						},
+						{
+							text : '清空文件夹',
+							icon: 'images/clear.png',
+							action : function(node) {
+								node.removeChildNodes();
+							},
+							type: 'fold'
+						},
+						{
+							text : '删除文件',
+							icon: 'images/delete.png',
+							action : function(node) {
+								node.removeNode();
+							},
+							type: 'file'
+						},
+						{
+							text : '展开',
+							icon: 'images/leaf.png',
+							action : function(node) {
+								node.expandNode();
+							},
+							topLine: true,
+							type: 'fold'
+						},
+						{
+							text : '展开所有',
+							icon: 'images/tree.png',
+							action : function(node) {
+								node.expandSubtree();
+							},
+							type: 'fold'
+						},
+						{
+							text : '折叠',
+							icon: 'images/leaf.png',
+							action : function(node) {
+								node.collapseNode();
+							},
+							type: 'fold'
+						},
+
+						{
+							text : '折叠所有',
+							icon: 'images/tree.png',
+							action : function(node) {
+								node.collapseSubtree();
+							},
+							type: 'fold'
+						}
+					]
+				}
+			};
+//以上都是重定义右键
+
+			//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+
+			//Setting custom events
+			tree.nodeBeforeOpenEvent = function(node) {
+				console.log(": Before expand event");
+			}
+
+			tree.nodeAfterOpenEvent = function(node) {
+				console.log(": After expand event");
+			}
+
+			tree.nodeBeforeCloseEvent = function(node) {
+				console.log(": Before collapse event");
+			}
+
+			//Loop to create test nodes
+			Root = tree.createNode('Root ',true,'images/folder.png',null,null,'context1','fold');
+
+			//Rendering the tree
+			tree.drawTree();
+
+			//Adding node after tree is already rendered
+			//tree.createNode('Real Time',false,'images/leaf.png',null,null,'context1');
+
+
+		};
+
+		function expand_all() {
+			tree.expandTree();
+		}
+
+		function collapse_all() {
+			tree.collapseTree();
+		}
+	</script>
+</head>
+<body>
+	<div class="htmleaf-container">
+		<div class="htmleaf-content">
+			<div id="div_tree"></div>
+		</div>
+	</div>
+
+</body>
+</html>
