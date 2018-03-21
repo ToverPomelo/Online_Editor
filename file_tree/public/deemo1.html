@@ -1,0 +1,75 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+  <div id="dContainer" style="z-index:1">
+    <ul>
+      <li><a href="">1</a></li>
+      <li><a href="">2</a></li>
+      <li><a href="">3</a></li>
+      <li><a href="">4</a>
+        <ul>
+          <li><a href="">4-1</a></li>
+          <li><a href="">4-2</a></li>
+          <li><a href="">4-3</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <script>
+  var
+  $=function(id){return document.getElementById(id)},
+  LSDrag={
+    TargetDOM:null, //储存当前拖拽的DOM对象引用
+    InitHerf:function(o){ //传递一个DOM对象，给其中的a添加mouseover和mouseout事件
+      var v=o.getElementsByTagName('a'),L=v.length,E;
+      while(L--){
+        (E=v[L]).onmousedown=function(){LSDrag.DragBegin(this)};
+        E.onmouseover=function(){LSDrag.TargetDOM&&LSDrag.DragOver(this)};
+        E.onmouseout=function(){LSDrag.TargetDOM&&LSDrag.DragOut(this)};
+        E.onmouseup=function(){LSDrag.DragEnd(this)};
+      }
+    },
+    DragOver:function(o){
+      o.style.backgroundColor='#888';
+      o.style.color='#FFF';
+    },
+    DragOut:function(o){
+      o.style.backgroundColor='';
+      o.style.color='';
+    },
+    DragBegin:function(o){
+      LSDrag.TargetDOM=o;
+    },
+    DragEnd:function(o){
+      var TargetDOM=LSDrag.TargetDOM,pTNode=TargetDOM.parentNode,
+      pNode=o.parentNode,v=pTNode.getElementsByTagName('a'),L=v.length;
+      switch(true){
+        case TargetDOM==o:
+        //这里写点击链接后发生的事件
+        break;
+        case pNode==pTNode.parentNode.parentNode:
+        alert('无法移动，目标文件夹与源文件夹相同!');
+        break;
+        default:
+        while(L--){
+          if(v[L]==o){
+            alert('不能移动到子目录下!');
+            o.style.backgroundColor='';
+            o.style.color='';
+            LSDrag.TargetDOM=null;
+            return;
+          }
+        }
+        (v=pNode.getElementsByTagName('ul')).length? //目标文件夹下有ul,添加自己到ul里最后
+        v[0].appendChild(pTNode):(pNode.appendChild(document.createElement('ul'))).appendChild(pTNode);
+      }
+      LSDrag.TargetDOM=null;
+    }
+  };
+  LSDrag.InitHerf($('dContainer'));
+</script>
+</body>
+</html>
+<br /><center>如不能显示效果，请按Ctrl+F5刷新本页，更多网页代码：<a href='http://www.veryhuo.com/' target='_blank'>http://www.veryhuo.com/</a></center>
