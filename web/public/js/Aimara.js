@@ -21,10 +21,10 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 		// p_parentNode: Reference to the parent node. Set null to create the node on the root;
 		// p_tag: Tag is used to store additional information on the node. All node attributes are visible when programming events and context menu actions;
 		// p_contextmenu: Name of the context menu, which is one of the attributes of the p_contextMenu object created with the tree;
-		createNode: function(p_text,p_expanded, p_icon, p_parentNode,p_tag,p_contextmenu,p_type,p_id) {
+		createNode: function(p_text,p_expanded, p_icon, p_parentNode,p_tag,p_contextmenu,p_type) {
 			v_tree = this;
 			node = {
-				id: p_id || 'node_' + this.nodeCounter,
+				id: 'node_' + this.nodeCounter,
 				text: p_text,
 				icon: p_icon,
 				parent: p_parentNode,
@@ -306,12 +306,6 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 		///// Deleting node
 		// p_node: Reference to the node;
 		removeNode: function(p_node) {
-
-			if(p_node.id == 'root'){
-				console.log("Can't remove root!");
-				return;
-			}
-
 			var index = p_node.parent.childNodes.indexOf(p_node);
 
 			if (p_node.elementLi.className=="last" && index!=0) {
