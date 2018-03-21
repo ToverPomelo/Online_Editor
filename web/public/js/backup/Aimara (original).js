@@ -34,7 +34,6 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 				contextMenu: p_contextmenu,
 				elementLi: null,
 				type: p_type || 'file',    //file or fold
-				fileType: null,
 				///// Removing the node and all its children
 				removeNode: function() { v_tree.removeNode(this); },
 				///// Expanding or collapsing the node, depending on the expanded value
@@ -67,11 +66,6 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 					}
 				}
 			}
-
-//file type:
-			var ldot = node.text.lastIndexOf(".");
-			node.fileType = ldot>0 ? node.text.substring(ldot + 1) : null;
-			//console.log(node.fileType);
 
 			this.nodeCounter++;
 
@@ -363,13 +357,11 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 
 					var v_div;
 					if (this.contextMenuDiv==null) {
-						v_div = createSimpleElement('ul','ul_cm','file-tree-menu');
+						v_div = createSimpleElement('ul','ul_cm','menu');
 //set the menu to the top
 						v_div.style.zIndex = '1000';
 //set background color
 						v_div.style.background = '#383838';
-//set cloor
-						v_div.style.color = 'white';
 
 						document.body.appendChild(v_div);
 					}
@@ -411,7 +403,7 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 						v_span.onclick = function () {  v_menu.elements[i].action(p_node) };
 
 						var v_a = createSimpleElement('a',null,null);
-						var v_ul = createSimpleElement('ul',null,'file-tree-submenu');
+						var v_ul = createSimpleElement('ul',null,'sub-menu');
 
 						v_a.appendChild(document.createTextNode(v_menu.elements[i].text));
 
@@ -428,7 +420,7 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 
 						if (v_menu.elements[i].submenu!=undefined) {
 							var v_span_more = createSimpleElement('div',null,null);
-							v_span_more.appendChild(createImgElement(null,'file-tree-menu_img','images/right.png'));
+							v_span_more.appendChild(createImgElement(null,'menu_img','images/right.png'));
 							v_li.appendChild(v_span_more);
 							v_tree.contextMenuLi(v_menu.elements[i].submenu,v_ul,p_node);
 						}
@@ -472,7 +464,7 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 				v_span.onclick = function () {  p_submenu.elements[i].action(p_node) };
 
 				var v_a = createSimpleElement('a',null,null);
-				var v_ul = createSimpleElement('ul',null,'file-tree-submenu');
+				var v_ul = createSimpleElement('ul',null,'sub-menu');
 
 				v_a.appendChild(document.createTextNode(p_submenu.elements[i].text));
 
@@ -489,7 +481,7 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 
 				if (p_submenu.elements[i].p_submenu!=undefined) {
 					var v_span_more = createSimpleElement('div',null,null);
-					v_span_more.appendChild(createImgElement(null,'file-tree-menu_img','images/right.png'));
+					v_span_more.appendChild(createImgElement(null,'menu_img','images/right.png'));
 					v_li.appendChild(v_span_more);
 					v_tree.contextMenuLi(p_submenu.elements[i].p_submenu,v_ul,p_node);
 				}
