@@ -1,3 +1,4 @@
+<!--http://www.veryhuo.com/a/view/35089.html-->
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=gbk">
@@ -28,7 +29,7 @@
         (E=v[L]).onmousedown=function(){LSDrag.DragBegin(this)};
         E.onmouseover=function(){LSDrag.TargetDOM&&LSDrag.DragOver(this)};
         E.onmouseout=function(){LSDrag.TargetDOM&&LSDrag.DragOut(this)};
-        E.onmouseup=function(){LSDrag.DragEnd(this)};
+        E.onmouseup=function(){LSDrag.DragOut(this);LSDrag.DragEnd(this);};
       }
     },
     DragOver:function(o){
@@ -62,14 +63,30 @@
             return;
           }
         }
-        (v=pNode.getElementsByTagName('ul')).length? //目标文件夹下有ul,添加自己到ul里最后
-        v[0].appendChild(pTNode):(pNode.appendChild(document.createElement('ul'))).appendChild(pTNode);
+
+//        (v=pNode.getElementsByTagName('ul')).length? //目标文件夹下有ul,添加自己到ul里最后
+//        v[0].appendChild(pTNode):(pNode.appendChild(document.createElement('ul'))).appendChild(pTNode);
+        (v=pNode.getElementsByTagName('ul')).length? //这个是移动时变插入的
+        insertAfter(v[0],pNode):
+        insertAfter(document.createElement('ul').appendChild(pTNode),pNode);
       }
       LSDrag.TargetDOM=null;
     }
   };
   LSDrag.InitHerf($('dContainer'));
+
+  //http://www.jb51.net/article/28533.htm
+  function insertAfter(newElement, targetElement){
+    var parent = targetElement.parentNode;
+    if (parent.lastChild == targetElement) {
+      // 如果最后的节点是目标元素，则直接添加。因为默认是最后
+      parent.appendChild(newElement);
+    }
+    else {
+      parent.insertBefore(newElement, targetElement.nextSibling);
+      //如果不是，则插入在目标元素的下一个兄弟节点 的前面。也就是目标元素的后面
+    }
+  }
 </script>
 </body>
 </html>
-<!--http://www.veryhuo.com/a/view/35089.html-->
