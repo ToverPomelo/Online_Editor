@@ -6,14 +6,14 @@
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
   <div id="dContainer" style="z-index:1">
     <ul>
-      <li><a href="">1</a></li>
-      <li><a href="">2</a></li>
-      <li><a href="">3</a></li>
-      <li><a href="">4</a>
+      <li><span href="">1</span></li>
+      <li><span href="">2</span></li>
+      <li><span href="">3</span></li>
+      <li><span href="">4</span>
         <ul>
-          <li><a href="">4-1</a></li>
-          <li><a href="">4-2</a></li>
-          <li><a href="">4-3</a></li>
+          <li><span href="">4-1</span></li>
+          <li><span href="">4-2</span></li>
+          <li><span href="">4-3</span></li>
         </ul>
       </li>
     </ul>
@@ -24,7 +24,7 @@
   LSDrag={
     TargetDOM:null, //储存当前拖拽的DOM对象引用
     InitHerf:function(o){ //传递一个DOM对象，给其中的a添加mouseover和mouseout事件
-      var v=o.getElementsByTagName('a'),L=v.length,E;
+      var v=o.getElementsByTagName('span'),L=v.length,E;
       while(L--){
         (E=v[L]).onmousedown=function(){LSDrag.DragBegin(this)};
         E.onmouseover=function(){LSDrag.TargetDOM&&LSDrag.DragOver(this)};

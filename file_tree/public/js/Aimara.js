@@ -521,7 +521,92 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 						item.style.backgroundColor = 'transparent';
 					}
       }
-		}
+		},
+
+		//Add dragging
+			TargetDOM:null, //储存当前拖拽的DOM对象引用
+			InitHerf: function(){ //传递一个DOM对象，给其中的a添加mouseover和mouseout事件
+				var o = document.getElementById(p_div);
+				var v=o.getElementsByTagName('span'),L=v.length,E;
+				while(L--){
+					(E=v[L]).onmousedown=function(){tree.DragBegin(this)};
+					E.onmouseover=function(){tree.TargetDOM&&tree.DragOver(this)};
+					E.onmouseout=function(){tree.TargetDOM&&tree.DragOut(this)};
+					E.onmouseup=function(){tree.DragOut(this);tree.DragEnd(this);};
+				}
+			},
+			DragOver:function(o){
+				o.style.backgroundColor='#888';
+				o.style.color='#FFF';
+			},
+			DragOut:function(o){
+				o.style.backgroundColor='';
+				o.style.color='';
+			},
+			DragBegin:function(o){
+				tree.TargetDOM=o;
+			},
+			DragEnd:function(o){
+				var TargetDOM=tree.TargetDOM,pTNode=TargetDOM.parentNode,
+				pNode=o.parentNode,v=pTNode.getElementsByTagName('span'),L=v.length;
+				switch(true){
+					case TargetDOM==o:
+					//这里写点击链接后发生的事件
+					break;
+					case pNode==pTNode.parentNode.parentNode:
+					alert('无法移动，目标文件夹与源文件夹相同!');
+					break;
+					default:
+					while(L--){
+						if(v[L]==o){
+							alert('不能移动到子目录下!');
+							o.style.backgroundColor='';
+							o.style.color='';
+							tree.TargetDOM=null;
+							return;
+						}
+					}
+
+					//        (v=pNode.getElementsByTagName('ul')).length? //目标文件夹下有ul,添加自己到ul里最后
+					//        v[0].appendChild(pTNode):(pNode.appendChild(document.createElement('ul'))).appendChild(pTNode);
+
+					insertAfter(pTNode,pNode);
+//Matain
+					if(pTNode == pTNode.parentNode.lastChild){
+						pTNode.style.backgroundColor = 'white';
+						pTNode.setAttribute("class", "last");
+					}
+					else{
+						pTNode.style.backgroundColor = 'transparent';
+						pTNode.setAttribute("class", "");
+					}
+
+					if(pTNode.nextSibling){
+						if(pTNode.nextSibling == pTNode.nextSibling.parentNode.lastChild){
+							pTNode.nextSibling.style.backgroundColor = 'white';
+							pTNode.nextSibling.setAttribute("class", "last");
+						}
+						else{
+							pTNode.nextSibling.style.backgroundColor = 'transparent';
+							pTNode.nextSibling.setAttribute("class", "");
+						}
+					}
+					
+					if(pNode == pNode.parentNode.lastChild){
+						pNode.style.backgroundColor = 'white';
+						pNode.setAttribute("class", "last");
+					}
+					else{
+						pNode.style.backgroundColor = 'transparent';
+						pNode.setAttribute("class", "");
+					}
+
+
+				}
+				tree.TargetDOM=null;
+			}
+		//End adding dragging
+
 	}
 
 	window.onclick = function() {
@@ -554,4 +639,17 @@ function createImgElement(p_id,p_class,p_src) {
 	if (p_src!=undefined)
 		element.src = p_src;
 	return element;
+}
+
+//http://www.jb51.net/article/28533.htm
+function insertAfter(newElement, targetElement){
+	var parent = targetElement.parentNode;
+	if (parent.lastChild == targetElement) {
+		// 如果最后的节点是目标元素，则直接添加。因为默认是最后
+		parent.appendChild(newElement);
+	}
+	else {
+		parent.insertBefore(newElement, targetElement.nextSibling);
+		//如果不是，则插入在目标元素的下一个兄弟节点 的前面。也就是目标元素的后面
+	}
 }

@@ -134,15 +134,16 @@
 				console.log(": Before collapse event");
 			}
 
-			//Loop to create test nodes
+			//Loop to 	create test nodes
 			Root = tree.createNode('Root ',true,'images/folder.png',null,null,'context1','fold','root');
-			Root.createChildNode('Node_1',true,'images/folder.png',null,null,'context1','file','root');
-			Root.createChildNode('Node_1',true,'images/folder.png',null,null,'context1','file','root');
-			Root.createChildNode('Node_1',true,'images/folder.png',null,null,'context1','file','root');
+			Root.createChildNode('Created1',true,'images/file.png',null,'context1','file');
+			Root.createChildNode('Created2',true,'images/file.png',null,'context1','file');
+			Root.createChildNode('Created3',true,'images/file.png',null,'context1','file');
 
 
 			//Rendering the tree
 			tree.drawTree();
+			tree.InitHerf();
 
 			//Adding node after tree is already rendered
 			//tree.createNode('Real Time',false,'images/leaf.png',null,null,'context1');
