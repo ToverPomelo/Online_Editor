@@ -610,7 +610,8 @@ $(document).ready(function() {
       if(document.getElementsByClassName('node_selected')[0]){
         document.getElementsByClassName('node_selected')[0].setAttribute("class", "");
       }
-      tree.selectedNode = null;
+      //与移动到文件夹时有冲突，所以暂时把它去掉，造成的结果是导入文件时默认父目录是上次点击的目录
+      //tree.selectedNode = null;
     });
 
 </script>
