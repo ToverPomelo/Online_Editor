@@ -223,18 +223,39 @@ function getType(e){
   }
   //console.log(editorLanguage);
   }
-  handFile(e.target.files[0]);
+  handFile(e.target.files[0],fileName);
   console.log('handed '+fileName);
   return fileName;
 }
 
-function handFile(file){
+function handFile(file,filename){
+  //tree是目录树的名字,root是根的名字
+  if(tree.selectedNode && tree.selectedNode.type == 'fold'){
+    for(var i=0;i<tree.selectedNode.childNodes.length;i++){
+      if(filename == tree.selectedNode.childNodes[i].text){
+        console.log("ERROR: File has the same name existed!");
+        return;
+      }
+    }
+    tree.selectedNode.createChildNode(filename,true,'images/file.png',null,'AddedFile','file');
+  }
+  else{
+    for(var i=0;i<root.childNodes.length;i++){
+      if(filename == root.childNodes[i].text){
+        console.log("ERROR: File has the same name existed!");
+        return;
+      }
+    }
+    root.createChildNode(filename,true,'images/file.png',null,'AddedFile','file');
+  }
+
   var reader = new FileReader();
   reader.onload = function(e){
     editor.setValue(this.result);
   };
   reader.readAsText(file);
   editor.selection.moveTo(0,0);
+
 }
 
 /*** 以上是编辑器功能相关内容 ***/
