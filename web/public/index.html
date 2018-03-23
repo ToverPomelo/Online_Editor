@@ -605,6 +605,13 @@ $(document).ready(function() {
         }
     );
 
+    //Add: 目录树点击空白区域取消选择
+    document.getElementById('PMrControler').addEventListener('mousedown',function(){
+      if(document.getElementsByClassName('node_selected')[0]){
+        document.getElementsByClassName('node_selected')[0].setAttribute("class", "");
+      }
+    });
+
 </script>
 
 </div>
