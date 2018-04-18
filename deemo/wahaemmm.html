@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="css/IDE.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/IDE.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+    <div id="IDE">
+        <div id="Menu">
+
+            <div class="menu_item">
+                <a href="#">运行◿</a>
+                <ul>
+                    <li><a href="#">编译</a></li>
+                    <li><a href="#">运行</a></li>
+                    <li><a href="#">编译运行</a></li>
+                    <li><a href="#">调试</a></li>
+                </ul>
+            </div>
+        </div>
+    <div>
+
+        <div id="ProManager">
+                <div id="PMrControler">
+                    <hr/>
+                    <center>
+                        <a href="#" id="PMrfileTreeLb" onClick="PMrControling(1)">文件管理</a>
+                        |
+                        <a href="#" id="PMrESLb" onClick="PMrControling(2)">项目元素</a>
+                        |
+                        <a href="#" id="PMrgdbSELb" onClick="PMrControling(3)">调试查看</a>
+                    </center>
+                    <hr/>
+                </div>
+                <div id="PMrContainer">
+                    <div class="PMrfileTree">
+                        <ul class="tree treemenu">
+                            <li class="tree-empty"><span class="toggler"></span><a href="#">Home</a></li>
+                            <li class="tree-opened"><span class="toggler">Category</span>
+                                <ul class="treemenu" style="display: block;">
+                                    <li class="tree-closed"><span class="toggler"></span><a href="#">jQuery</a>
+                                        <ul class="treemenu" style="display: none;">
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery UI</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery Mobile</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="tree-opened"><span class="toggler"></span><a href="#">JavaScript</a>
+                                        <ul class="treemenu" style="display: block;">
+                                            <li class="tree-empty tree-opened"><span class="toggler"></span><a class="active" href="#">AngularJS</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">React</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">Backbone</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#suits">Golang</a></li>
+                                </ul>
+                            </li>
+                            <li class="tree-closed"><span class="toggler"></span><a href="#about">About</a>
+                                <ul class="treemenu" style="display: none;">
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#">Contact</a></li>
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#">Blog</a></li>
+                                    <li class="tree-closed"><span class="toggler"></span><a href="#">Jobs</a>
+                                        <ul class="treemenu" style="display: none;">
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs1">Job 1</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs2">Job 2</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs3">Job 3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="PMrES">class:people</div>
+                    <div class="PMrgdbSE">int x=3;</div>
+                </div>
+        </div>
+        <div id="EditorCon">
+<pre id="MainEditor"style="margin:0 0 0 -8px;min-height:100%">
+<textarea class="ace_text-input">
+#include <iostream>
+int main(){
+    
+    
+    return 0;
+}
+</textarea></pre>
+<script>
+    var editor = ace.edit("MainEditor");
+    editor.setFontSize(18);
+    editor.setReadOnly(false); 
+    editor.setOption("wrap", "free")
+    ace.require("ace/ext/language_tools");
+    editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+    });
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/c_cpp");
+</script>
+            <div class="resizeMe editor">
+            </div>
+        </div>
+    </div>
+    </div>
+</body>

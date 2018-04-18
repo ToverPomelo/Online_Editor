@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-language" content="zh-CN" />
+    <link type="text/css" rel="stylesheet" href="css/IDE.css">
+    <link type="text/css" rel="stylesheet" href="css/htmlOS.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/IDE.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="IDE">
+        <div id="Menu">
+            <div id="LOGO"><a href="#">SCNU</a></div>
+            <div class="menu_item" style="margin-left:24px;">
+                <a href="#">文件◿</a>
+                <ul>
+                    <li><a href="#" id="fileInputTrigger">导入文件</a></li>
+                    <li><a href="#">导出文件</a></li>
+                    <li><a href="#">清空文件</a></li>
+                    <li><a href="#">分享文件</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">编辑◿</a>
+                <ul>
+                    <li><a href="#">代码缩进</a></li>
+                    <li><a href="#">替换</a></li>
+                    <li><a href="#">全部替换</a></li>
+                    <li><a href="#">搜索</a></li>
+                    <li><a href="#">跳转</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">视图◿</a>
+                <ul>
+                    <li><a href="#">项目管理</a></li>
+                    <li><a href="#">状态栏</a></li>
+                    <li><a href="#">自动隐藏</a></li>
+                    <li><a href="#">多窗口模式</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">编译器◿</a>
+                <ul>
+                    <li><a href="#">gcc 4.81</a></li>
+                    <li><a href="#">gcc 7.10</a></li>
+                    <li><a href="#">clang 5.0</a></li>
+                    <li><a href="#">clang 5.1</a></li>
+                    <li><a href="#">cl 14.0</a></li>
+                    <li><a href="#">cl 14.2</a></li>
+                </ul>
+            </div>
+            <div class="menu_item">
+                <a href="#">运行◿</a>
+                <ul>
+                    <li><a href="#">编译</a></li>
+                    <li><a href="#">运行</a></li>
+                    <li><a href="#">编译运行</a></li>
+                    <li><a href="#">调试</a></li>
+                </ul>
+            </div>
+            <div class="menu_item" style="margin-left:32px;margin-right:16px;">
+                <a href="#">编辑器设置</a>
+            </div>
+            <div class="menu_item">
+                <a href="#">帮助</a>
+            </div>
+        </div>
+    <div>
+        <div id="OutputArea">
+                <div id="StatusBar">
+                    代码编辑中。。。
+                </div>
+                complied successful ! ! !
+        </div>
+        <div id="ProManager">
+                <div id="PMrControler">
+                    <hr/>
+                    <center>
+                        <a href="#" id="PMrfileTreeLb" onClick="PMrControling(1)">文件管理</a>
+                        |
+                        <a href="#" id="PMrESLb" onClick="PMrControling(2)">项目元素</a>
+                        |
+                        <a href="#" id="PMrgdbSELb" onClick="PMrControling(3)">调试查看</a>
+                    </center>
+                    <hr/>
+                </div>
+                <div id="PMrContainer">
+                    <div class="PMrfileTree">
+                        <ul class="tree treemenu">
+                            <li class="tree-empty"><span class="toggler"></span><a href="#">Home</a></li>
+                            <li class="tree-opened"><span class="toggler">Category</span>
+                                <ul class="treemenu" style="display: block;">
+                                    <li class="tree-closed"><span class="toggler"></span><a href="#">jQuery</a>
+                                        <ul class="treemenu" style="display: none;">
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery UI</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">jQuery Mobile</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="tree-opened"><span class="toggler"></span><a href="#">JavaScript</a>
+                                        <ul class="treemenu" style="display: block;">
+                                            <li class="tree-empty tree-opened"><span class="toggler"></span><a class="active" href="#">AngularJS</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">React</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#">Backbone</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#suits">Golang</a></li>
+                                </ul>
+                            </li>
+                            <li class="tree-closed"><span class="toggler"></span><a href="#about">About</a>
+                                <ul class="treemenu" style="display: none;">
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#">Contact</a></li>
+                                    <li class="tree-empty"><span class="toggler"></span><a href="#">Blog</a></li>
+                                    <li class="tree-closed"><span class="toggler"></span><a href="#">Jobs</a>
+                                        <ul class="treemenu" style="display: none;">
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs1">Job 1</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs2">Job 2</a></li>
+                                            <li class="tree-empty"><span class="toggler"></span><a href="#jobs3">Job 3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="PMrES">class:people</div>
+                    <div class="PMrgdbSE">int x=3;</div>
+                </div>
+        </div>
+        <div id="EditorCon">
+        </div>
+    </div>
+    </div>
+</body>
+    <script type="text/javascript" src="js/windowsTemplate.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/htmlOS.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/IDE2.js" charset="utf-8"></script>
+<script>
+htmlOS.init("EditorCon");
+editor=[];
+setEditor=function (id){
+    editor[id] = ace.edit(id);
+    editor[id].setFontSize(18);
+    editor[id].setReadOnly(false); 
+    editor[id].setOption("wrap", "free")
+    editor[id].setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+    });
+    editor[id].setTheme("ace/theme/monokai");
+    editor[id].getSession().setMode("ace/mode/c_cpp");
+    var x=document.getElementById(id).parentNode;
+    x.orRemove=x.remove;
+    x.remove=function(){
+    x.orRemove();
+    delete editor[id];
+    }
+};
+p=htmlOS.start("window",editorsTemplate);
+p.set("movable");
+setEditor("main.cpp");
+</script>
